@@ -1,0 +1,13 @@
+{
+    "dependencies": {},
+    "engines": {
+        "node": "12.x"
+    },
+    "scripts": {
+        "start": "",
+        "test": "jest"
+    },
+    "devDependencies": {
+        "jest": "^26.0.1"
+    }
+}
