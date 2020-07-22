@@ -1,5 +1,5 @@
 const APP_ID = '3074457348136685529'
-const VERSION = '0.0.45'
+const VERSION = '0.0.46'
 const KANBAN = {
     WORKITEM: 'kanbanworkitem',
     STAGE: 'kanbanstage',
@@ -104,7 +104,9 @@ async function tagItemsAsWorkItem(widgets) {
 }
 
 function addMetadataTag(widgets, tag) {
+    console.log("Starting search")
     widgets.forEach(widget => {
+        console.log("another line item")
         addParameter(widget, tag, true)
     })
 }
@@ -113,8 +115,11 @@ function addParameter(widget, key, value) {
     let metadata = widget.metadata[APP_ID] || {}
     metadata[key] = value
     widget.metadata[APP_ID] = metadata
+    console.log("before widget log...")
     console.log(widget)
+        // next time: Make sure that the collection is polpulated (see error https://miro.com/app/board/o9J_kuOV4eU=/?moveToWidget=3074457348999013413&cot=2 )
     miro.board.widgets.update(widget)
+    console.log("Update happened")
 }
 
 async function openBottomPanel() {
