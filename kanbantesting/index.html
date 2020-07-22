@@ -2,8 +2,13 @@
 <html lang="en">
 
 <head>
+    <meta http-equiv="expires" content="0">
+
     <script type="text/javascript" src="https://miro.com/app/static/sdk.1.1.js"></script>
-    <script type="text/javascript" src="kanban.js"></script>
+    <script>
+        document.write('<script type="text/javascript" src="kanban.js?' + Date.now() + '"></s' + 'cript>')
+    </script>
+
     <script type="text/javascript">
         miro.onReady(() => {
             console.log('Kanbantesting: ' + VERSION)
