@@ -83,4 +83,20 @@ describe('CsvRenderer', () => {
 
         expect(result).toBe('"First Field";"Second Field"' + "\n\"value\";\"Thomas Meier\"\n\"Noch Was\";\"Anderes\"\n")
     })
+
+    test('Multiple Line, multiple Values with hinting', () => {
+        renderer = new kanbanMetrics.CsvRenderer();
+        headlinesList = ["First Field", "Second Field", "Number Field"];
+        quoteHintList = [true, true, false]
+        transitionsList = [
+            ["value", "Thomas Meier", 1],
+            ["Noch Was", "Anderes", 2]
+        ];
+
+        result = renderer.render(headlinesList, transitionsList, quoteHintList);
+
+        expect(result).toBe('"First Field";"Second Field";"Number Field"' + "\n\"value\";\"Thomas Meier\";1\n\"Noch Was\";\"Anderes\";2\n")
+    })
+
+
 });

@@ -33,28 +33,44 @@ function collectHistoryTransitionsFromWorkItems(items) {
 }
 
 function CsvRenderer() {
-    function render(headlineItems, lines) {
-        result = ""
-        if (headlineItems.length > 0) {
-            headlineItems = wrapEachItemInQuotes(headlineItems)
-            result += joinWithDelimiterAndAddLineSeparator(headlineItems);
-        }
-        if (lines.length > 0) {
-            lines = lines.map(lineItems => {
-                wrappedLineItems = wrapEachItemInQuotes(lineItems)
-                return joinWithDelimiterAndAddLineSeparator(wrappedLineItems)
-            })
-            result += lines.join("")
-        }
-        return result
+
+    var quoteHints;
+
+    function render(headlineItems, lines, _quoteHints) {
+        quoteHints = _quoteHints
+        return renderHeadline(headlineItems) + renderContent(lines)
+    }
+
+    function renderContent(lines) {
+        return hasItems(lines) ? lines.map(lineItems => {
+            wrappedLineItems = wrapItemsConditionallyInQuotes(lineItems);
+            return joinWithDelimiterAndAddLineSeparator(wrappedLineItems);
+        }).join("") : ""
+    }
+
+    function wrapAndJoinItemsAndAddDelimiter(lineItems) {
+        wrappedLineItems = wrapEachItemInQuotes(lineItems);
+        return joinWithDelimiterAndAddLineSeparator(wrappedLineItems);
+    }
+
+    function renderHeadline(headlineItems) {
+        return hasItems(headlineItems) ? wrapAndJoinItemsAndAddDelimiter(headlineItems) : ""
+    }
+
+    function wrapItemsConditionallyInQuotes(items) {
+        return items.map((value, index) => typeof quoteHints === 'undefined' || quoteHints[index] === true ? wrapInQuotes(value) : value);
     }
 
     function wrapEachItemInQuotes(items) {
-        return items.map(value => wrapInQuotes(value));
+        return items.map(wrapInQuotes);
     }
 
     function wrapInQuotes(value) {
         return '"' + value + '"'
+    }
+
+    function hasItems(anArray) {
+        return anArray.length > 0
     }
 
     function joinWithDelimiterAndAddLineSeparator(lineItems) {
