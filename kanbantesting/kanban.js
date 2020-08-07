@@ -1,5 +1,5 @@
 const APP_ID = '3074457348136685529'
-const VERSION = '0.0.46'
+const VERSION = '0.0.49'
 const KANBAN = {
     WORKITEM: 'kanbanworkitem',
     STAGE: 'kanbanstage',
@@ -134,4 +134,17 @@ async function openBottomPanel() {
             }
         })
     }
+}
+
+function widgetsEligibleForKanbanMenuEntries(widgets) {
+    exactlyOneWidgetSelected = widgets.length == 1
+    return exactlyOneWidgetSelected && itemIsAlreadyInitialized(widgets[0])
+}
+
+function itemIsAlreadyInitialized(aWidget) {
+    return aWidget.id != "0"
+}
+
+if (typeof exports !== 'undefined') {
+    module.exports = { widgetsEligibleForKanbanMenuEntries }
 }
