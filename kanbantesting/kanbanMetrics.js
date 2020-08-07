@@ -32,33 +32,45 @@ function collectHistoryTransitionsFromWorkItems(items) {
     return transitionsList
 }
 
-function CsvRenderer() {
-
+function CsvRenderer(headlineItems, lines, quoteHints) {
+    var headlineItems;
+    var lines;
     var quoteHints;
 
-    function render(headlineItems, lines, _quoteHints) {
-        quoteHints = _quoteHints
-        return renderHeadline(headlineItems) + renderContent(lines)
+    var quotedLineItemsList = [];
+
+    function render() {
+        prepareHeadlineItems()
+        prepareContentItems()
+        return convertArrayToString(renderLines())
     }
 
-    function renderContent(lines) {
-        return hasItems(lines) ? lines.map(lineItems => {
-            wrappedLineItems = wrapItemsConditionallyInQuotes(lineItems);
-            return joinWithDelimiterAndAddLineSeparator(wrappedLineItems);
-        }).join("") : ""
+    function prepareHeadlineItems() {
+        if (hasItems(headlineItems)) {
+            quotedLineItemsList.push(wrapEachItemInQuotes(headlineItems))
+        }
     }
 
-    function wrapAndJoinItemsAndAddDelimiter(lineItems) {
-        wrappedLineItems = wrapEachItemInQuotes(lineItems);
-        return joinWithDelimiterAndAddLineSeparator(wrappedLineItems);
+    function prepareContentItems() {
+        lines.forEach(prepareContentLine)
     }
 
-    function renderHeadline(headlineItems) {
-        return hasItems(headlineItems) ? wrapAndJoinItemsAndAddDelimiter(headlineItems) : ""
+    function prepareContentLine(lineItems) {
+        quotedLineItemsList.push(wrapItemsConditionallyInQuotes(lineItems))
+    }
+
+    function convertArrayToString(theArray) {
+        return theArray.join("")
+    }
+
+    function renderLines() {
+        return quotedLineItemsList.map(joinWithDelimiterAndAddLineSeparator)
     }
 
     function wrapItemsConditionallyInQuotes(items) {
-        return items.map((value, index) => typeof quoteHints === 'undefined' || quoteHints[index] === true ? wrapInQuotes(value) : value);
+        return hasItems(quoteHints) ?
+            items.map((item, i) => quoteHints[i] ? wrapInQuotes(item) : item) :
+            wrapEachItemInQuotes(items)
     }
 
     function wrapEachItemInQuotes(items) {
@@ -70,7 +82,7 @@ function CsvRenderer() {
     }
 
     function hasItems(anArray) {
-        return anArray.length > 0
+        return anArray && anArray.length > 0
     }
 
     function joinWithDelimiterAndAddLineSeparator(lineItems) {
