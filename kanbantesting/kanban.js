@@ -1,5 +1,5 @@
 const APP_ID = '3074457348136685529'
-const VERSION = '0.0.52'
+const VERSION = '0.0.53'
 const KANBAN = {
     WORKITEM: 'kanbanworkitem',
     STAGE: 'kanbanstage',
@@ -31,31 +31,7 @@ function getAllKanbanWorkItems() {
     return allWidgets
 }
 
-function dumpStatistics() {
-    getAllKanbanWorkItems().then(
-        items => {
 
-            items.forEach(item => {
-                lastStage = "NewItem"
-                item.metadata[APP_ID]['history'].forEach(historyEntry => {
-
-                    transition = item['id'] + ";" + lastStage + ";" +
-                        historyEntry['stage'] + ";" +
-                        historyEntry['timestamp'] + ";(" +
-                        item['plainText'] + " " +
-                        historyEntry['readableTime'] + ")"
-
-                    lastStage = historyEntry.stage
-                    console.log('transition =>', transition)
-                })
-            })
-
-            console.log("inDumpStats", items)
-        },
-        function(error) { console.error(error) }
-    )
-
-}
 
 async function collectKanbanWidgetsFromIds(itemIds) {
     let widgetPromises = [];

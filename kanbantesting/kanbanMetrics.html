@@ -6,6 +6,11 @@
     <script src="https://miro.com/app/static/sdk.1.1.js"></script>
 
     <style>
+        html,
+        body {
+            height: 100%;
+        }
+        
         .rtb-sidebar-caption {
             font-size: 14px;
             font-weight: bold;
@@ -15,14 +20,14 @@
         
         textarea {
             display: block;
-            height: calc(100% - 110px);
+            height: calc(100% - 120px);
             margin: 20px 0 0 20px;
             background-color: white;
             border-radius: 4px;
             border: 0;
             width: calc(100% - 40px);
             text-align: left;
-            font-size: 22px;
+            font-size: 9px;
         }
         
         .tip {
@@ -40,8 +45,14 @@
     <textarea id="widget-text" readonly></textarea>
 
     <script>
+        document.write('<script type="text/javascript" src="kanban.js?' + Date.now() + '"></s' + 'cript>')
         document.write('<script type="text/javascript" src="kanbanMetrics.js?' + Date.now() + '"></s' + 'cript>')
     </script>
+
+    <script>
+        printStatisticsTo('widget-text')
+    </script>
+
 </body>
 
 </html>

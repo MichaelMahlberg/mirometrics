@@ -1,5 +1,4 @@
 const kanban = require('../kanbantesting/kanban');
-
 test('array with no entires is not eligable', () => {
     expect(kanban.widgetsEligibleForKanbanMenuEntries([])).toBe(false)
 })
