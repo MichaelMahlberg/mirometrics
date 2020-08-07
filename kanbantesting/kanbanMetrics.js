@@ -1,5 +1,3 @@
-console.log("kanban Metrics loaded")
-
 function printStatisticsTo(elementName) {
     getAllKanbanWorkItems().then(
         items => {
@@ -31,14 +29,37 @@ function collectHistoryTransitionsFromWorkItems(items) {
             transitionsList.push(transition);
         });
     });
-    return transitionsList;
+    return transitionsList
 }
 
-function TransitionsCsvRenderer() {
-    function render() {
-        return '';
+function CsvRenderer() {
+    function render(headlineItems, lines) {
+        result = ""
+        if (headlineItems.length > 0) {
+            headlineItems = wrapEachItemInQuotes(headlineItems)
+            result += joinWithDelimiterAndAddLineSeparator(headlineItems);
+        }
+        if (lines.length > 0) {
+            lines = lines.map(lineItems => {
+                wrappedLineItems = wrapEachItemInQuotes(lineItems)
+                return joinWithDelimiterAndAddLineSeparator(wrappedLineItems)
+            })
+            result += lines.join("")
+        }
+        return result
     }
 
+    function wrapEachItemInQuotes(items) {
+        return items.map(value => wrapInQuotes(value));
+    }
+
+    function wrapInQuotes(value) {
+        return '"' + value + '"'
+    }
+
+    function joinWithDelimiterAndAddLineSeparator(lineItems) {
+        return lineItems.join(";") + "\n"
+    }
     return {
         render: render
     }
@@ -47,6 +68,6 @@ function TransitionsCsvRenderer() {
 
 if (typeof exports !== 'undefined') {
     module.exports = {
-        TransitionsCsvRenderer
+        CsvRenderer
     }
 }
