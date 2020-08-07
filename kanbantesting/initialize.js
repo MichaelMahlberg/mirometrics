@@ -21,7 +21,8 @@ miro.onReady(() => {
                 title: 'Kanbantesting',
                 svgIcon: svgIcon,
                 onClick: () => {
-                    openBottomPanel()
+                    // openBottomPanel()
+                    console.log("Bottom icon clicked", dumpStatistics())
                 },
             },
             getWidgetMenuItems: widgets => {

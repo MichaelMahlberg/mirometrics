@@ -1,5 +1,5 @@
 const APP_ID = '3074457348136685529'
-const VERSION = '0.0.49'
+const VERSION = '0.0.52'
 const KANBAN = {
     WORKITEM: 'kanbanworkitem',
     STAGE: 'kanbanstage',
@@ -18,6 +18,43 @@ async function updateMovedItems(itemIds) {
     updateItemsMetadata(items, stages)
         // find related stage
         // record logical change
+}
+
+function getAllKanbanWorkItems() {
+    allWidgets = miro.board.widgets.get({
+        metadata: {
+            [APP_ID]: {
+                [KANBAN.WORKITEM]: true
+            }
+        }
+    })
+    return allWidgets
+}
+
+function dumpStatistics() {
+    getAllKanbanWorkItems().then(
+        items => {
+
+            items.forEach(item => {
+                lastStage = "NewItem"
+                item.metadata[APP_ID]['history'].forEach(historyEntry => {
+
+                    transition = item['id'] + ";" + lastStage + ";" +
+                        historyEntry['stage'] + ";" +
+                        historyEntry['timestamp'] + ";(" +
+                        item['plainText'] + " " +
+                        historyEntry['readableTime'] + ")"
+
+                    lastStage = historyEntry.stage
+                    console.log('transition =>', transition)
+                })
+            })
+
+            console.log("inDumpStats", items)
+        },
+        function(error) { console.error(error) }
+    )
+
 }
 
 async function collectKanbanWidgetsFromIds(itemIds) {
@@ -126,6 +163,7 @@ async function openBottomPanel() {
     const authorized = await miro.isAuthorized()
     if (authorized) {
         console.log('authorized')
+        miro.board.ui.openLeftSidebar('kanbanMetrics.html')
     } else {
         console.log('unauthorized')
         miro.board.ui.openModal('not-authorized.html').then(res => {
