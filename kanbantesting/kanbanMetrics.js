@@ -68,9 +68,21 @@ function CsvRenderer(headlineItems, lines, quoteHints) {
     }
 
     function wrapItemsConditionallyInQuotes(items) {
-        return hasItems(quoteHints) ?
-            items.map((item, i) => quoteHints[i] ? wrapInQuotes(item) : item) :
+        return  quoteHintsSupplied() ?
+            items.map(quoteIfHintedToDoSo) :
             wrapEachItemInQuotes(items)
+    }
+
+    function quoteIfHintedToDoSo(item, index) {
+        return shouldWeQuoteOnHintAt(index) ? wrapInQuotes(item) : item
+    }
+
+    function shouldWeQuoteOnHintAt ( index ) {
+        return quoteHints[index] === true
+    }
+
+    function quoteHintsSupplied(){
+        return hasItems(quoteHints)
     }
 
     function wrapEachItemInQuotes(items) {
