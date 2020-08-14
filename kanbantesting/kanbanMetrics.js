@@ -93,9 +93,9 @@ function CsvRenderer(headlineItems, lines, quoteHints) {
     }
 }
 
-
 if (typeof exports !== 'undefined') {
     module.exports = {
-        CsvRenderer
+        CsvRenderer,
+        collectHistoryTransitionsFromWorkItems
     }
 }
