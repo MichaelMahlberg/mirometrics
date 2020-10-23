@@ -118,21 +118,26 @@ async function tagItemsAsWorkItem(widgets) {
 
 function addMetadataTag(widgets, tag) {
     console.log("Starting search")
-    widgets.forEach(widget => {
-        console.log("another line item")
-        addParameter(widget, tag, true)
+    widgets.forEach(async widget => {
+        console.log("another line item", widget)
+        addParameter(widget.id, tag, true)
     })
 }
 
-function addParameter(widget, key, value) {
+async function addParameter(widgetId, key, value) {
+    widget = await getMiroWidgetByID(widgetId)
     let metadata = widget.metadata[APP_ID] || {}
     metadata[key] = value
     widget.metadata[APP_ID] = metadata
     console.log("before widget log...")
     console.log(widget)
-        // next time: Make sure that the collection is polpulated (see error https://miro.com/app/board/o9J_kuOV4eU=/?moveToWidget=3074457348999013413&cot=2 )
     miro.board.widgets.update(widget)
     console.log("Update happened")
+}
+
+async function getMiroWidgetByID(widgetId) {
+    widgets = await miro.board.widgets.get({ id: widgetId })
+    return widgets[0]
 }
 
 async function openBottomPanel() {
