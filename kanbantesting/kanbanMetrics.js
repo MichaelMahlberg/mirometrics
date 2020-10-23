@@ -17,19 +17,25 @@ function collectHistoryTransitionsFromWorkItems(items) {
     transitionsList = [];
     items.forEach(item => {
         lastStage = "NewItem";
-        item.metadata[APP_ID]['history'].forEach(historyEntry => {
+        if (itemHasHistory(item)) {
+            item.metadata[APP_ID]['history'].forEach(historyEntry => {
 
-            transition = item['id'] + ";" + lastStage + ";" +
-                historyEntry['stage'] + ";" +
-                historyEntry['timestamp'] + ";(" +
-                item['plainText'] + " " +
-                historyEntry['readableTime'] + ")";
+                transition = item['id'] + ";" + lastStage + ";" +
+                    historyEntry['stage'] + ";" +
+                    historyEntry['timestamp'] + ";(" +
+                    item['plainText'] + " " +
+                    historyEntry['readableTime'] + ")";
 
-            lastStage = historyEntry.stage;
-            transitionsList.push(transition);
-        });
+                lastStage = historyEntry.stage;
+                transitionsList.push(transition);
+            });
+        }
     });
     return transitionsList
+}
+
+function itemHasHistory(item) {
+    return item.metadata[APP_ID] && item.metadata[APP_ID]['history']
 }
 
 function CsvRenderer(headlineItems, lines, quoteHints) {
@@ -96,30 +102,38 @@ function CsvRenderer(headlineItems, lines, quoteHints) {
 function KanbanCsvRenderer(itemsList) {
     var itemsList;
     const APP_ID = "3074457348136685529";
+    var csvItemsList = [];
 
     function render() {
         var headlineItems = ["ID", "From Stage", "To Stage", "Timestamp", "plain Text and readable Time"];
         var quotings = [false, true, true, false, true];
-        var csvItemsList = [];
 
         itemsList.forEach(item => {
-            lastStage = "NewItem";
-            item.metadata[APP_ID]['history'].forEach(historyEntry => {
-                var csvItem = [];
-                csvItem.push(item['id']);
-                csvItem.push(lastStage);
-                csvItem.push(historyEntry['stage'])
-                csvItem.push(historyEntry['timestamp'])
-                csvItem.push("(" + item['plainText'] + " " + historyEntry['readableTime'] + ")");
-
-                lastStage = historyEntry.stage;
-                csvItemsList.push(csvItem);
-            });
+            if (hasHistory(item)) {
+                addHistoryEntriesToCsvEntryList(item);
+            }
         });
-
-
         var csvRenderer = new CsvRenderer(headlineItems, csvItemsList, quotings)
         return csvRenderer.render();
+    }
+
+    function addHistoryEntriesToCsvEntryList(item) {
+        lastStage = "NewItem";
+        item.metadata[APP_ID]['history'].forEach(historyEntry => {
+            var csvItem = [];
+            csvItem.push(item['id']);
+            csvItem.push(lastStage);
+            csvItem.push(historyEntry['stage'])
+            csvItem.push(historyEntry['timestamp'])
+            csvItem.push("(" + item['plainText'] + " " + historyEntry['readableTime'] + ")");
+
+            lastStage = historyEntry.stage;
+            csvItemsList.push(csvItem);
+        });
+    }
+
+    function hasHistory(item) {
+        return item.metadata[APP_ID] && item.metadata[APP_ID]['history']
     }
 
     return {
