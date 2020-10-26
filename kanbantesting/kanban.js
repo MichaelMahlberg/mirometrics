@@ -1,5 +1,5 @@
 const APP_ID = '3074457348136685529'
-const VERSION = '0.0.56'
+const VERSION = '0.0.58'
 const KANBAN = {
     WORKITEM: 'kanbanworkitem',
     STAGE: 'kanbanstage',
@@ -8,6 +8,18 @@ const KANBAN = {
 async function handleWidgetTransformation(event) {
     let itemIds = event.data.map(widget => widget.id)
     updateMovedItems(itemIds)
+}
+
+async function handleWidgetCreated(event, something) {
+    event.data.forEach(async element => {
+        if (isKanbanWorkItem(element)) {
+            resetHistory(element.id);
+        }
+    })
+}
+
+function resetHistory(widgetId) {
+    setMetadataEntry(widgetId, "history", [])
 }
 
 async function updateMovedItems(itemIds) {
@@ -49,6 +61,10 @@ async function collectKanbanWidgetsFromIds(itemIds) {
 
 function isKanbanWidget(widget) {
     return typeof widget.metadata[APP_ID] !== 'undefined'
+}
+
+function isKanbanWorkItem(widget) {
+    return isKanbanWidget(widget) && widget.metadata[APP_ID][KANBAN.WORKITEM] === true
 }
 
 function updateItemsMetadata(items, stages) {
@@ -120,11 +136,11 @@ function addMetadataTag(widgets, tag) {
     console.log("Starting search")
     widgets.forEach(async widget => {
         console.log("another line item", widget)
-        addParameter(widget.id, tag, true)
+        setMetadataEntry(widget.id, tag, true)
     })
 }
 
-async function addParameter(widgetId, key, value) {
+async function setMetadataEntry(widgetId, key, value) {
     widget = await getMiroWidgetByID(widgetId)
     let metadata = widget.metadata[APP_ID] || {}
     metadata[key] = value

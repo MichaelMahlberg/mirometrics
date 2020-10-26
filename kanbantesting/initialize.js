@@ -51,4 +51,8 @@ miro.onReady(() => {
         'WIDGETS_TRANSFORMATION_UPDATED',
         handleWidgetTransformation
     )
+    let listenerCreated = miro.addListener(
+        'WIDGETS_CREATED',
+        handleWidgetCreated
+    )
 })
