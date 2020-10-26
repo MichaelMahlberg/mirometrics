@@ -1,43 +1,20 @@
-function printStatisticsTo(elementName) {
+function printItemTransitionsTo(elementName) {
+
     getAllKanbanWorkItems().then(
         items => {
-            transitionsList = collectHistoryTransitionsFromWorkItems(items);
-            printTransitionsListToTransitionsArea(transitionsList, elementName);
+            csvData = new KanbanWorkitemTransitionsCsvRenderer(items).render()
+            printCsvDataToTextarea(csvData, elementName)
         },
         function(error) { console.error(error) }
     )
 }
 
-function printTransitionsListToTransitionsArea(transitionsList, elementName) {
+function printCsvDataToTextarea(csvData, elementName) {
     textarea = document.getElementById(elementName);
-    textarea.value = transitionsList.join("\n");
+    textarea.value = csvData;
 }
 
-function collectHistoryTransitionsFromWorkItems(items) {
-    transitionsList = [];
-    items.forEach(item => {
-        lastStage = "NewItem";
-        if (itemHasHistory(item)) {
-            item.metadata[APP_ID]['history'].forEach(historyEntry => {
-
-                transition = item['id'] + ";" + lastStage + ";" +
-                    historyEntry['stage'] + ";" +
-                    historyEntry['timestamp'] + ";(" +
-                    item['plainText'] + " " +
-                    historyEntry['readableTime'] + ")";
-
-                lastStage = historyEntry.stage;
-                transitionsList.push(transition);
-            });
-        }
-    });
-    return transitionsList
-}
-
-function itemHasHistory(item) {
-    return item.metadata[APP_ID] && item.metadata[APP_ID]['history']
-}
-
+// CSVRenderer Object
 function CsvRenderer(headlineItems, lines, quoteHints) {
     var headlineItems;
     var lines;
@@ -99,7 +76,8 @@ function CsvRenderer(headlineItems, lines, quoteHints) {
     }
 }
 
-function KanbanCsvRenderer(itemsList) {
+// KanbanWorkitemTransitionsCsvRenderer Object
+function KanbanWorkitemTransitionsCsvRenderer(itemsList) {
     var itemsList;
     const APP_ID = "3074457348136685529";
     var csvItemsList = [];
@@ -144,7 +122,6 @@ function KanbanCsvRenderer(itemsList) {
 if (typeof exports !== 'undefined') {
     module.exports = {
         CsvRenderer,
-        KanbanCsvRenderer,
-        collectHistoryTransitionsFromWorkItems
+        KanbanCsvRenderer: KanbanWorkitemTransitionsCsvRenderer
     }
 }
