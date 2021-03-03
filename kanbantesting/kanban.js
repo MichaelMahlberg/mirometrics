@@ -1,5 +1,5 @@
 const APP_ID = '3074457348136685529'
-const VERSION = '0.0.60'
+const VERSION = '0.0.64'
 const KANBAN = {
     WORKITEM: 'kanbanworkitem',
     STAGE: 'kanbanstage',
@@ -7,29 +7,41 @@ const KANBAN = {
 
 async function handleWidgetTransformation(event) {
     let itemIds = event.data.map(widget => widget.id)
-    updateMovedItems(itemIds)
+    recordStageChangesFor(itemIds)
 }
 
 async function handleWidgetCreated(event, something) {
     event.data.forEach(async element => {
-        if (isKanbanWorkItem(element)) {
-            resetHistory(element.id);
-        }
+        resetHistoryForClonedKanbanItem(element)
+
     })
+
+}
+
+function resetHistoryForClonedKanbanItem(element) {
+    if (isKanbanWorkItem(element)) {
+        resetHistory(element.id)
+        recordStageChangesFor([element.id])
+    }
 }
 
 function resetHistory(widgetId) {
     setMetadataEntry(widgetId, "history", [])
 }
 
-async function updateMovedItems(itemIds) {
+async function recordStageChangesFor(itemIds) {
     let stages = []
 
     stages = await collectStages()
     items = await collectKanbanWidgetsFromIds(itemIds)
-    updateItemsMetadata(items, stages)
-        // find related stage
-        // record logical change
+    
+    items.forEach(item => {
+        if (stage = itemInStage(item, stages)) {
+            console.log("stage", stage)
+            recordStageChange(item, stage);
+        }
+    })
+
 }
 
 function getAllKanbanWorkItems() {
@@ -67,17 +79,7 @@ function isKanbanWorkItem(widget) {
     return isKanbanWidget(widget) && widget.metadata[APP_ID][KANBAN.WORKITEM] === true
 }
 
-function updateItemsMetadata(items, stages) {
-    // make sure that dropping outside a dropzone also is recorded
-    items.forEach(item => {
-        if (stage = itemInStage(item, stages)) {
-            console.log("stage", stage)
-            addStageChange(item, stage);
-        }
-    })
-}
-
-function addStageChange(item, stage) {
+function recordStageChange(item, stage) {
     let history = item.metadata[APP_ID].history || [];
     // mit vorheriger Stage vergleichen 
     if (stageHasChanged(history, stage)) {
@@ -129,7 +131,8 @@ async function tagItemsAsStage(widgets) {
 }
 
 async function tagItemsAsWorkItem(widgets) {
-    addMetadataTag(widgets, KANBAN.WORKITEM)
+    addMetadataTag(widgets, KANBAN.WORKITEM);    
+    recordStageChangesFor( widgets.map(widget => widget.id) );
 }
 
 function addMetadataTag(widgets, tag) {
