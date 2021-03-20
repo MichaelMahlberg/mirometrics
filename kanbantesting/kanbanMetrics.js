@@ -1,8 +1,16 @@
 function printItemTransitionsTo(elementName) {
+    // item = getAllKanbanWorkItems();
+    // stages = await collectStages();
+    // csvData = new KanbanWorkitemTransitionsCsvRenderer(items, stages).render()
+     
+    // Learning: Promise.all waits for all promises to be resolved and 
+    // returns an array with the result of each promise as a separate entry 
+    // in said array
+    // Also: [name, name] "catches" the results in object of said names
 
-    getAllKanbanWorkItems().then(
-        items => {
-            csvData = new KanbanWorkitemTransitionsCsvRenderer(items).render()
+    Promise.all( [getAllKanbanWorkItems(), collectStages()] ).then(
+        ([items,stages]) => {
+            csvData = new KanbanWorkitemTransitionsCsvRenderer(items,stages).render()
             printCsvDataToTextarea(csvData, elementName)
         },
         function(error) { console.error(error) }
@@ -77,31 +85,45 @@ function CsvRenderer(headlineItems, lines, quoteHints) {
 }
 
 // KanbanWorkitemTransitionsCsvRenderer Object
-function KanbanWorkitemTransitionsCsvRenderer(itemsList) {
-    var itemsList;
+function KanbanWorkitemTransitionsCsvRenderer(itemsList, stageList) {
     const APP_ID = "3074457348136685529";
     var csvItemsList = [];
 
     function render() {
-        var headlineItems = ["ID", "From Stage", "To Stage", "Timestamp", "plain Text and readable Time"];
-        var quotings = [false, true, true, false, true];
+        var headlineItems = ["ID", "From stage", "From stage name", "To stage", "To stage name", "Timestamp", "Plain text and readable time"];
+        var quotings = stageList 
+           ? [false, true, true, true, true, false, true]
+           : [false, true, true, false, true];
 
         itemsList.forEach(item => {
             if (hasHistory(item)) {
-                addHistoryEntriesToCsvEntryList(item);
+                addHistoryEntriesToCsvEntryList(item, stageList);
             }
         });
         var csvRenderer = new CsvRenderer(headlineItems, csvItemsList, quotings)
         return csvRenderer.render();
     }
 
-    function addHistoryEntriesToCsvEntryList(item) {
+function getRealNameFor(stageId, stageList)
+{
+    
+    // TODO: Extract literal "NewItem"
+    if( stageId == "NewItem" ) return "unstaged";
+
+    // TODO: Explain why this works in simple words for Michael (Syntax!!!)
+    foundStage = stageList.find( element => element.id == stageId);
+    return foundStage.plainText
+}
+
+    function addHistoryEntriesToCsvEntryList(item, stageList) {
         lastStage = "NewItem";
         item.metadata[APP_ID]['history'].forEach(historyEntry => {
             var csvItem = [];
             csvItem.push(item['id']);
             csvItem.push(lastStage);
+            if( stageList ) csvItem.push( getRealNameFor( lastStage, stageList ) ) ;
             csvItem.push(historyEntry['stage'])
+            if( stageList ) csvItem.push( getRealNameFor( historyEntry['stage'], stageList ) ) ;
             csvItem.push(historyEntry['timestamp'])
             csvItem.push("(" + item['plainText'] + " " + historyEntry['readableTime'] + ")");
 
