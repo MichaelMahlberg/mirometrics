@@ -106,16 +106,21 @@ function KanbanWorkitemTransitionsCsvRenderer(itemsList, stageList) {
         return csvRenderer.render();
     }
 
-function getRealNameFor(stageId, stageList)
-{
-    
-    // TODO: Extract literal "NewItem"
-    if( stageId == "NewItem" ) return "unstaged";
+    function getRealNameFor(stageId, stageList) {
 
-    // TODO: Explain why this works in simple words for Michael (Syntax!!!)
-    foundStage = stageList.find( element => element.id == stageId);
-    return foundStage.plainText
-}
+        if (stageId == NoStageId) return "unstaged";
+        foundStage = stageList.find(element => element.id == stageId);
+        // could be replaced with a long and readable version for old people. :D
+        /*
+        foundStage = stageList.find(function(element) {
+            if (element.id == stageId) {
+                return true;
+            }
+            return false
+        })
+        */
+        return foundStage.plainText
+    }
 
     function addHistoryEntriesToCsvEntryList(item, stageList) {
         lastStage = NoStageId;
