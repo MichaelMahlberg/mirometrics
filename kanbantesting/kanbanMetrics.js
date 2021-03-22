@@ -1,3 +1,5 @@
+const NoStageId = "NoStage";
+
 function printItemTransitionsTo(elementName) {
     // item = getAllKanbanWorkItems();
     // stages = await collectStages();
@@ -116,7 +118,7 @@ function getRealNameFor(stageId, stageList)
 }
 
     function addHistoryEntriesToCsvEntryList(item, stageList) {
-        lastStage = "NewItem";
+        lastStage = NoStageId;
         item.metadata[APP_ID]['history'].forEach(historyEntry => {
             var csvItem = [];
             csvItem.push(item['id']);

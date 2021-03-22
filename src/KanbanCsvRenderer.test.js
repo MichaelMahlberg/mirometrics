@@ -33,7 +33,7 @@ describe('KanbanCsvRenderer', () => {
 
         result = renderer.render();
 
-        expect(result).toBe(expectedCsvHeadline + NEWLINE + '3074457349235411623;"NewItem";"3074457349235412031";1596796983566;"(Technical debt: Move authorization to appropriate place Fri, 07 Aug 2020 10:43:03 GMT)"' + NEWLINE)
+        expect(result).toBe(expectedCsvHeadline + NEWLINE + '3074457349235411623;"NoStage";"3074457349235412031";1596796983566;"(Technical debt: Move authorization to appropriate place Fri, 07 Aug 2020 10:43:03 GMT)"' + NEWLINE)
     })
 
     test('One data line with 2 history entries delivers two csv lines with headlines', () => {
@@ -89,7 +89,7 @@ describe('KanbanCsvRenderer', () => {
         result = renderer.render();
 
         expect(result).toBe(expectedCsvHeadline + NEWLINE +
-            '3074457349235411623;"NewItem";"unstaged";"3074457349235412031";"Stage Oans";1596796983566;"(Technical debt: Move authorization to appropriate place Fri, 07 Aug 2020 10:43:03 GMT)"' + NEWLINE +
+            '3074457349235411623;"NoStage";"unstaged";"3074457349235412031";"Stage Oans";1596796983566;"(Technical debt: Move authorization to appropriate place Fri, 07 Aug 2020 10:43:03 GMT)"' + NEWLINE +
             '3074457349235411623;"3074457349235412031";"Stage Oans";"3074457349235471811";"Stage Zwoa";1596837980945;"(Technical debt: Move authorization to appropriate place Fri, 07 Aug 2020 22:06:20 GMT)"' + NEWLINE
         )
     })
@@ -143,9 +143,9 @@ describe('KanbanCsvRenderer', () => {
         result = renderer.render();
 
         expect(result).toBe(expectedCsvHeadline + NEWLINE +
-            '3074457349235411623;"NewItem";"3074457349235412031";1596796983566;"(Technical debt: Move authorization to appropriate place Fri, 07 Aug 2020 10:43:03 GMT)"' + NEWLINE +
+            '3074457349235411623;"NoStage";"3074457349235412031";1596796983566;"(Technical debt: Move authorization to appropriate place Fri, 07 Aug 2020 10:43:03 GMT)"' + NEWLINE +
             '3074457349235411623;"3074457349235412031";"3074457349235471811";1596837980945;"(Technical debt: Move authorization to appropriate place Fri, 07 Aug 2020 22:06:20 GMT)"' + NEWLINE +
-            '3074457349235472041;"NewItem";"3074457349235412031";1596797163708;"(Display stats for one item only on menu click Fri, 07 Aug 2020 10:46:03 GMT)"' + NEWLINE +
+            '3074457349235472041;"NoStage";"3074457349235412031";1596797163708;"(Display stats for one item only on menu click Fri, 07 Aug 2020 10:46:03 GMT)"' + NEWLINE +
             '3074457349235472041;"3074457349235412031";"3074457349235471811";1596797167691;"(Display stats for one item only on menu click Fri, 07 Aug 2020 10:46:07 GMT)"' + NEWLINE
         )
     })
