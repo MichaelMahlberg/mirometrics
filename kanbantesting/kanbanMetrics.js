@@ -93,9 +93,7 @@ function KanbanWorkitemTransitionsCsvRenderer(itemsList, stageList) {
 
     function render() {
         var headlineItems = ["ID", "From stage", "From stage name", "To stage", "To stage name", "Timestamp", "Plain text and readable time"];
-        var quotings = stageList 
-           ? [false, true, true, true, true, false, true]
-           : [false, true, true, false, true];
+        var quotings = [false, true, true, true, true, false, true];
 
         itemsList.forEach(item => {
             if (hasHistory(item)) {
@@ -128,9 +126,9 @@ function KanbanWorkitemTransitionsCsvRenderer(itemsList, stageList) {
             var csvItem = [];
             csvItem.push(item['id']);
             csvItem.push(lastStage);
-            if( stageList ) csvItem.push( getRealNameFor( lastStage, stageList ) ) ;
+            csvItem.push(getRealNameFor(lastStage, stageList));
             csvItem.push(historyEntry['stage'])
-            if( stageList ) csvItem.push( getRealNameFor( historyEntry['stage'], stageList ) ) ;
+            csvItem.push(getRealNameFor(historyEntry['stage'], stageList));
             csvItem.push(historyEntry['timestamp'])
             csvItem.push("(" + item['plainText'] + " " + historyEntry['readableTime'] + ")");
 
