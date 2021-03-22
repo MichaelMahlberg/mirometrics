@@ -27,14 +27,27 @@ miro.onReady(() => {
             getWidgetMenuItems: widgets => {
                 console.log("logging widgets from menu handler", widgets)
                 if (widgetsEligibleForKanbanMenuEntries(widgets)) {
+
+                    if(allWidgetsAreStages(widgets)) {
+                        stageToolTipText = "Is Stage";
+                    } else {
+                        stageToolTipText = "Make Stage";
+                    }
+
+                    if( allWidgetsAreWorkItems(widgets)) {
+                        workItemToolTipText = "Is WorkItem";
+                    } else {
+                        workItemToolTipText = "Make WorkItem";
+                    }
+
                     return Promise.resolve([{
-                        tooltip: 'Stage',
+                        tooltip: stageToolTipText,
                         svgIcon: svgIcon,
                         onClick: () => {
                             tagItemsAsStage(widgets)
                         },
                     }, {
-                        tooltip: 'Item',
+                        tooltip: workItemToolTipText,
                         svgIcon: svgIcon,
                         onClick: () => {
                             tagItemsAsWorkItem(widgets)

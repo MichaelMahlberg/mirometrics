@@ -1,5 +1,5 @@
 const APP_ID = '3074457348136685529'
-const VERSION = '0.0.67'
+const VERSION = '0.0.68'
 const KANBAN = {
     WORKITEM: 'kanbanworkitem',
     STAGE: 'kanbanstage',
@@ -77,6 +77,10 @@ function isKanbanWidget(widget) {
 
 function isKanbanWorkItem(widget) {
     return isKanbanWidget(widget) && widget.metadata[APP_ID][KANBAN.WORKITEM] === true
+}
+
+function isKanbanStage(widget) {
+    return isKanbanWidget(widget) && widget.metadata[APP_ID][KANBAN.STAGE] === true
 }
 
 function recordStageChange(item, stage) {
@@ -177,6 +181,16 @@ async function openBottomPanel() {
 function widgetsEligibleForKanbanMenuEntries(widgets) {
     exactlyOneWidgetSelected = widgets.length == 1
     return exactlyOneWidgetSelected && itemIsAlreadyInitialized(widgets[0])
+}
+
+function allWidgetsAreStages(widgets) {
+    stages = widgets.filter( isKanbanStage );
+    return stages.length === widgets.length;
+}
+
+function allWidgetsAreWorkItems(widgets) {
+    workItems = widgets.filter( isKanbanWorkItem );
+    return workItems.length === widgets.length;
 }
 
 function itemIsAlreadyInitialized(aWidget) {
