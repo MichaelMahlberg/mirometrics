@@ -117,6 +117,7 @@ function KanbanWorkitemTransitionsCsvRenderer(itemsList, stageList) {
             return false
         })
         */
+        if (!foundStage) return "Stage was deleted";
         return foundStage.plainText
     }
 
