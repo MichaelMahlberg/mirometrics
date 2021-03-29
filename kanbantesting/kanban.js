@@ -8,6 +8,7 @@ const KANBAN = {
 async function handleWidgetTransformation(event) {
     let itemIds = event.data.map(widget => widget.id)
     recordStageChangesFor(itemIds)
+    findAllHighlights().then(hideKanbanWidgetBorders);
 }
 
 async function handleWidgetCreated(event, something) {
@@ -195,6 +196,70 @@ function allWidgetsAreWorkItems(widgets) {
 
 function itemIsAlreadyInitialized(aWidget) {
     return aWidget.id != "0"
+}
+
+function toggleKanbanWidgetHighlighting() {
+    findAllHighlights().then(highlightWidgets => {
+        if(highlightWidgets.length == 0) {
+            showKanbanWidgetBorders()
+        } else {
+            hideKanbanWidgetBorders(highlightWidgets)
+        }
+    })
+}
+
+function showKanbanWidgetBorders() {
+    collectStages().then(stages => stages.map(showStageBorder))
+    getAllKanbanWorkItems().then(workItems => workItems.map(showWorkItemBorder))
+}
+
+
+
+function showWidgetBorder(widget, color, padding) {
+
+    var b = widget.bounds;
+    color = color || "#0000ff";
+    padding = padding || 3;
+    miro.board.widgets.create({
+        type:"SHAPE",
+        x: b.x,
+        y: b.y,
+        width: b.width + 2*padding,
+        height: b.height + 2*padding,
+        style: {
+            borderColor: color,
+            borderWidth: Math.max(3, b.width / 50),
+            borderStyle: 0
+        },
+        metadata: {
+            [APP_ID] : {
+                "kanbanWidgetHighlight" : true,
+                "relatedId": widget.id
+            }
+        }
+    })
+}
+
+function showStageBorder(stageWidget) {
+    showWidgetBorder(stageWidget, "#ff0000", 3)
+}
+
+function showWorkItemBorder(workItemWidget) {
+    showWidgetBorder(workItemWidget, "#00ff00", 6)
+}
+
+function findAllHighlights() {
+    return miro.board.widgets.get({
+        metadata: {
+            [APP_ID]: {
+                "kanbanWidgetHighlight": true
+            }
+        },
+    })
+}
+
+function hideKanbanWidgetBorders(widgets) {
+    miro.board.widgets.deleteById(widgets.map(widget => widget.id))
 }
 
 if (typeof exports !== 'undefined') {

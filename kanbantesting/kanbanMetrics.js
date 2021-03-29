@@ -153,3 +153,4 @@ if (typeof exports !== 'undefined') {
         KanbanCsvRenderer: KanbanWorkitemTransitionsCsvRenderer
     }
 }
+

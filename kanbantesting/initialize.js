@@ -46,17 +46,17 @@ const svgIconWorkItemHighlight = svgIconWorkItemTemplate.replace('{fillColor}', 
                 svgIcon: svgIcon,
                 toolbarSvgIcon: svgIcon,
                 librarySvgIcon: svgIcon,
-                onClick: async() => {
-                    openBottomPanel()
+                onClick: () => {
+                    toggleKanbanWidgetHighlighting()
                 },
             },
             bottomBar: {
-                title: 'Kanbantesting',
-                svgIcon: svgIcon,
-                onClick: () => {
-                    openBottomPanel()
+                    title: 'Kanbantesting',
+                    svgIcon: svgIcon,
+                    onClick: () => {
+                        openBottomPanel()
+                    }
                 },
-            },
             getWidgetMenuItems: widgets => {
                 console.log("logging widgets from menu handler", widgets)
                 if (widgetsEligibleForKanbanMenuEntries(widgets)) {
