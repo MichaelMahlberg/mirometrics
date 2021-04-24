@@ -4,11 +4,12 @@ https://miro.com/oauth/authorize/?response_type=code&client_id=30744573481366855
 
 */
 $code = $_GET["code"];
+$secret = file_get_contents("../../kanbantesting_miro_secret.txt");
 $redirect_url = "https://miroplugins.devisive.de/kanbantesting/install.php";
 
-$url = "https://api.miro.com/v1/oauth/token?grant_type=authorization_code&client_id=3074457348136685529&client_secret=noWKyLNXZkCiGk8xfhHAkS9kC9fKLvgy&code=%s&redirect_uri=%s";
+$url = "https://api.miro.com/v1/oauth/token?grant_type=authorization_code&client_id=3074457348136685529&client_secret=%s&code=%s&redirect_uri=%s";
 
-$url = sprintf($url, $code, $redirect_url);
+$url = sprintf($url, $secret, $code, $redirect_url);
 //echo "<p>$url</p>";
 
 $curl = curl_init();
