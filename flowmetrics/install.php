@@ -1,11 +1,11 @@
 <?php
 /*
-https://miro.com/oauth/authorize/?response_type=code&client_id=3074457348136685529&redirect_uri=https%3A%2F%2Fmiroplugins.devisive.de%2Fkanbantesting%2Finstall.php
+https://miro.com/oauth/authorize/?response_type=code&client_id=3074457348136685529&redirect_uri=https%3A%2F%2Fmiroplugins.devisive.de%2Fflowmetrics%2Finstall.php
 
 */
 $code = $_GET["code"];
-$secret = file_get_contents("../../kanbantesting_miro_secret.txt");
-$redirect_url = "https://miroplugins.devisive.de/kanbantesting/install.php";
+$secret = file_get_contents("../../flowmetrics_miro_secret.txt");
+$redirect_url = "https://miroplugins.devisive.de/flowmetrics/install.php";
 
 $url = "https://api.miro.com/v1/oauth/token?grant_type=authorization_code&client_id=3074457348136685529&client_secret=%s&code=%s&redirect_uri=%s";
 

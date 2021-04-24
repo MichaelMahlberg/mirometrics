@@ -10,7 +10,7 @@
 	document.querySelector('button').addEventListener('click', function () {
 		const authorizeOptions = {
 			response_type: 'token',
-			redirect_uri: 'https://' + window.location.host + '/kanbantesting/success.html'
+			redirect_uri: 'https://' + window.location.host + '/flowmetrics/success.html'
 		}
 		miro.authorize(authorizeOptions)
 			.then(() => miro.getToken())

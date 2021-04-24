@@ -1,7 +1,7 @@
 console.log("included initialize file")
 
 miro.onReady(() => {
-    console.log('Kanbantesting: ' + VERSION)
+    console.log('Flowmetrics: ' + VERSION)
     const svgIcon = `
     <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
     <rect x="2" y="2" width="44" height="44" rx="4" stroke-width="4" stroke="currentColor" fill="none" />
@@ -42,7 +42,7 @@ const svgIconWorkItemHighlight = svgIconWorkItemTemplate.replace('{fillColor}', 
     miro.initialize({
         extensionPoints: {
             toolbar: {
-                title: 'Cool metrics for Kanban',
+                title: 'Show me the Kanban Widgets',
                 svgIcon: svgIcon,
                 toolbarSvgIcon: svgIcon,
                 librarySvgIcon: svgIcon,
@@ -51,7 +51,7 @@ const svgIconWorkItemHighlight = svgIconWorkItemTemplate.replace('{fillColor}', 
                 },
             },
             bottomBar: {
-                    title: 'Kanbantesting',
+                    title: 'Cool metrics for Kanban',
                     svgIcon: svgIcon,
                     onClick: () => {
                         openBottomPanel()
