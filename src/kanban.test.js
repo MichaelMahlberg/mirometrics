@@ -1,4 +1,4 @@
-const kanban = require('../kanbantesting/kanban');
+const kanban = require('../flowmetrics/kanban');
 test('array with no entires is not eligable', () => {
     expect(kanban.widgetsEligibleForKanbanMenuEntries([])).toBe(false)
 })

@@ -1,4 +1,4 @@
-const kanbanMetrics = require("../kanbantesting/kanbanMetrics");
+const kanbanMetrics = require("../flowmetrics/kanbanMetrics");
 
 const expectedCsvHeadline = '"ID";"From stage";"From stage name";"To stage";"To stage name";"Timestamp";"Plain text and readable time"';
 

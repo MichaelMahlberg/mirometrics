@@ -1,4 +1,4 @@
-const kanbanMetrics = require("../kanbantesting/kanbanMetrics");
+const kanbanMetrics = require("../flowmetrics/kanbanMetrics");
 // import { TransitionsCsvRenderer } from "../kanbantesting/kanbanMetrics";
 
 describe('CsvRenderer', () => {
