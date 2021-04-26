@@ -1,7 +1,6 @@
 {
-    "dependencies": {},
     "engines": {
-        "node": "12.x"
+        "node": "16.x"
     },
     "scripts": {
         "start": "",
