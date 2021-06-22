@@ -53,7 +53,7 @@ Using the csv-data it is extemely easy to generate at least two of the most impo
 You can [watch a video of the plugin in use](https://youtu.be/2xiKMR-zCX4). (Up until now only in German)
 
 ### Try it by installing the development version
-The development(!) version (up until now there is **_no production version_**) of the plugin can be installed for a miro team by visiting [the plugins verification page](https://miro.com/oauth/authorize/?response_type=code&client_id=3074457348136685529&redirect_uri=https%3A%2F%2Fmiroplugins.devisive.de%2Fkanbantesting%2Fsuccess.html) This development version of the plugin can change any time or might even be broken from time to time. 
+The development(!) version (up until now there is **_no production version_**) of the plugin can be installed for a miro team by visiting [the plugins verification page](https://miro.com/oauth/authorize/?response_type=code&client_id=3074457348136685529&redirect_uri=https%3A%2F%2Fmiroplugins.devisive.de%2Fflowmetrics%2Fsuccess.html) This development version of the plugin can change any time or might even be broken from time to time. 
 
 ### Try it by installing your own version of it
 As explained on Miro's website you can also create a _dev team_ for your account in Miro and start developing your own Miro plugins. A good starting point for this is https://developers.miro.com/docs/getting-started
