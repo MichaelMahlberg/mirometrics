@@ -1,6 +1,10 @@
 *.swp
 .well-known
 
+# We dont want to save our certificate files, do we?
+key.pem
+cert.pem
+
 
 # Created by https://www.toptal.com/developers/gitignore/api/node,macos
 # Edit at https://www.toptal.com/developers/gitignore?templates=node,macos

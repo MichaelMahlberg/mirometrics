@@ -4,9 +4,11 @@
     },
     "scripts": {
         "start": "",
-        "test": "jest"
+        "test": "jest",
+        "serve": "npx http-server -S -C cert.pem"
     },
     "devDependencies": {
+        "http-server": "^13.0.0",
         "jest": "^26.0.1"
     }
 }

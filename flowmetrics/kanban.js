@@ -1,4 +1,4 @@
-const APP_ID = '3074457348136685529'
+const APP_ID = '3074457362549652472'
 const VERSION = '0.0.68'
 const KANBAN = {
     WORKITEM: 'kanbanworkitem',
