@@ -88,7 +88,6 @@ function CsvRenderer(headlineItems, lines, quoteHints) {
 
 // KanbanWorkitemTransitionsCsvRenderer Object
 function KanbanWorkitemTransitionsCsvRenderer(itemsList, stageList) {
-    const APP_ID = "3074457348136685529";
     var csvItemsList = [];
 
     function render() {
