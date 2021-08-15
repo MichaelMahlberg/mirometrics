@@ -4,6 +4,8 @@
 # We dont want to save our certificate files, do we?
 key.pem
 cert.pem
+localhost.crt
+localhost.key
 
 
 # Created by https://www.toptal.com/developers/gitignore/api/node,macos

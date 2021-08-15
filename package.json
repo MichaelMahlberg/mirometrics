@@ -5,7 +5,7 @@
     "scripts": {
         "start": "",
         "test": "jest",
-        "serve": "npx http-server -S -C cert.pem"
+        "serve": "npx http-server -S -C localhost.crt -K localhost.key"
     },
     "devDependencies": {
         "http-server": "^13.0.0",
