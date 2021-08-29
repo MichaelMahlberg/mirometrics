@@ -18,5 +18,4 @@
    },
    ```
    5. run `npm run serve`
-   6. open browser and accept certificate
 3. Dont forget to use your Dev App Client ID in your code, when you use metadata sruff (that currently is broken anyway) :D.

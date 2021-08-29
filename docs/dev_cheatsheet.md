@@ -11,3 +11,5 @@ https://developers.miro.com/docs/share_your_app_wp
 
 Link to our Plugin as of 2021-04-21:
 https://miro.com/oauth/authorize/?response_type=code&client_id=3074457348136685529&redirect_uri=https%3A%2F%2Fmiroplugins.devisive.de%2Fkanbantesting%2Fsuccess.html
+
+See also [local development notes]("Install Miro plugin for local development.md")
