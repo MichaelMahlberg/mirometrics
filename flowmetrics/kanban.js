@@ -1,11 +1,41 @@
 const DEV = location.hostname === 'localhost';
 
 const APP_ID = DEV?'3074457362549652472':'3074457348136685529'
-const VERSION = '0.0.68'
+const VERSION = '0.0.69'
 const KANBAN = {
     WORKITEM: 'kanbanworkitem',
     STAGE: 'kanbanstage',
 }
+
+class miroMetadataRepository {
+    isKanbanWidget(widget) {
+        console.log("miroMetadataRepository:isKanbanWidget")
+        return typeof widget.metadata[APP_ID] !== 'undefined'
+    }
+
+    isKanbanWorkItem(widget) {
+        console.log("miroMetadataRepository:isKanbanWorkItem")
+        return this.isKanbanWidget(widget) && widget.metadata[APP_ID][KANBAN.WORKITEM] === true
+    }
+
+    isKanbanStage(widget) {
+        console.log("miroMetadataRepository:isKanbanStage")
+        return this.isKanbanWidget(widget) && widget.metadata[APP_ID][KANBAN.STAGE] === true
+    }
+
+    async setMetadataEntry(widgetId, key, value) {
+        let widget = await getMiroWidgetByID(widgetId)
+        let metadata = widget.metadata[APP_ID] || {}
+        metadata[key] = value
+        widget.metadata[APP_ID] = metadata
+        console.log("before widget log...")
+        console.log(widget)
+        miro.board.widgets.update(widget)
+        console.log("Update happened")
+    }
+}
+
+let metricsRepository = new miroMetadataRepository();
 
 async function handleWidgetTransformation(event) {
     let itemIds = event.data.map(widget => widget.id)
@@ -75,15 +105,18 @@ async function collectKanbanWidgetsFromIds(itemIds) {
 }
 
 function isKanbanWidget(widget) {
-    return typeof widget.metadata[APP_ID] !== 'undefined'
+    console.log("application:isKanbanWidget")
+    return metricsRepository.isKanbanWidget(widget);
 }
 
 function isKanbanWorkItem(widget) {
-    return isKanbanWidget(widget) && widget.metadata[APP_ID][KANBAN.WORKITEM] === true
+    console.log("application:isKanbanWorkitem")
+    return metricsRepository.isKanbanWorkItem(widget);
 }
 
 function isKanbanStage(widget) {
-    return isKanbanWidget(widget) && widget.metadata[APP_ID][KANBAN.STAGE] === true
+    console.log("application:isKanbanStage")
+    return metricsRepository.isKanbanStage(widget);
 }
 
 function recordStageChange(item, stage) {
@@ -151,14 +184,7 @@ function addMetadataTag(widgets, tag) {
 }
 
 async function setMetadataEntry(widgetId, key, value) {
-    widget = await getMiroWidgetByID(widgetId)
-    let metadata = widget.metadata[APP_ID] || {}
-    metadata[key] = value
-    widget.metadata[APP_ID] = metadata
-    console.log("before widget log...")
-    console.log(widget)
-    miro.board.widgets.update(widget)
-    console.log("Update happened")
+    metricsRepository.setMetadataEntry(widgetId, key, value)
 }
 
 async function getMiroWidgetByID(widgetId) {
@@ -263,6 +289,8 @@ function findAllHighlights() {
 function hideKanbanWidgetBorders(widgets) {
     miro.board.widgets.deleteById(widgets.map(widget => widget.id))
 }
+
+
 
 if (typeof exports !== 'undefined') {
     module.exports = { widgetsEligibleForKanbanMenuEntries }
