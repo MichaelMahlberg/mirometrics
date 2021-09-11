@@ -6,6 +6,8 @@ key.pem
 cert.pem
 localhost.crt
 localhost.key
+localhost.csr
+localhost.ext
 
 
 # Created by https://www.toptal.com/developers/gitignore/api/node,macos
