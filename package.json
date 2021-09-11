@@ -1,13 +1,14 @@
 {
-    "engines": {
-        "node": "16.x"
-    },
+    "engines": {},
     "scripts": {
         "start": "",
         "test": "jest",
+        "deploy": "node deploy.js",
         "serve": "npx http-server -S -C localhost.crt -K localhost.key"
     },
     "devDependencies": {
+        "dotenv": "^10.0.0",
+        "ftp-deploy": "^2.4.1",
         "http-server": "^13.0.0",
         "jest": "^26.0.1"
     }
