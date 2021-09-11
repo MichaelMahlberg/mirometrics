@@ -1,10 +1,11 @@
-const APP_ID = '3074457362549652472'
+const DEV = location.hostname === 'localhost';
+
+const APP_ID = DEV?'3074457362549652472':'3074457348136685529'
 const VERSION = '0.0.68'
 const KANBAN = {
     WORKITEM: 'kanbanworkitem',
     STAGE: 'kanbanstage',
 }
-const DEV = location.hostname === 'localhost';
 
 async function handleWidgetTransformation(event) {
     let itemIds = event.data.map(widget => widget.id)
