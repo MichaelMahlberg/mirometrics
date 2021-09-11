@@ -4,7 +4,7 @@ const KANBAN = {
     WORKITEM: 'kanbanworkitem',
     STAGE: 'kanbanstage',
 }
-const DEV = location.hostname !== 'localhost';
+const DEV = location.hostname === 'localhost';
 
 async function handleWidgetTransformation(event) {
     let itemIds = event.data.map(widget => widget.id)
