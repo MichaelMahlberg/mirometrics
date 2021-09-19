@@ -1,6 +1,7 @@
 const kanbanMetrics = require("../flowmetrics/kanbanMetrics");
 
 const expectedCsvHeadline = '"ID";"From stage";"From stage name";"To stage";"To stage name";"Timestamp";"Plain text and readable time"';
+APP_ID = '3074457348136685529';
 
 describe('KanbanCsvRenderer', () => {
     const NEWLINE = "\n";
