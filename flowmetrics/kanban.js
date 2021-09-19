@@ -1,7 +1,6 @@
 const DEV = typeof location !== 'undefined' && location.hostname === 'localhost';
 
 const APP_ID = DEV?'3074457362549652472':'3074457348136685529'
-const VERSION = '0.0.69'
 const KANBAN = {
     WORKITEM: 'kanbanworkitem',
     STAGE: 'kanbanstage',
