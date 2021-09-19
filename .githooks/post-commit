@@ -9,3 +9,4 @@ then
   git commit --amend -C HEAD ./flowmetrics/version.js
   export IN_GIT_POST_COMMIT_HOOK=
 fi
+
