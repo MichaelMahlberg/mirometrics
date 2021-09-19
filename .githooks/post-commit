@@ -1,10 +1,10 @@
 #!/bin/sh
 
-
 if [ "$IN_GIT_POST_COMMIT_HOOK" != "TRUE" ]
 then
-  echo post commit hook - incrementing version number in ./flowmetrics/ersion.js
+  echo post commit hook - incrementing version number in ./flowmetrics/version.js
   export IN_GIT_POST_COMMIT_HOOK=TRUE
+  node .githooks/version_bump.js
   git add ./flowmetrics/version.js
   git commit --amend -C HEAD ./flowmetrics/version.js
   export IN_GIT_POST_COMMIT_HOOK=
