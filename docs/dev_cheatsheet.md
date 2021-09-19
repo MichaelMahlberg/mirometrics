@@ -7,8 +7,11 @@ docker images // zeigt dir alle layer images
 docker run --rm -it -v $(pwd)/:/src kanbandocker npm test -- "--watchAll"
 ```
 
+## Create pre-commit hook magic
+`git config core.hooksPath .githooks` 
+
 ## Deploying to the live system:
-npm run deploy
+`npm run deploy`   
 (needs e.g. a local configuration file called .env thanks to https://www.npmjs.com/package/dotenv )
 
 ## How to share miro apps:
