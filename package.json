@@ -9,7 +9,7 @@
     "devDependencies": {
         "dotenv": "^10.0.0",
         "fs": "^0.0.1-security",
-        "ftp-deploy": "^2.4.1",
+        "ftp-deploy": "^2.3.8",
         "http-server": "^13.0.0",
         "jest": "^27.2.0"
     }
